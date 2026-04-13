@@ -1,19 +1,25 @@
 package org.yash;
 
+import org.yash.mergesort.MergeSort;
 
+import java.util.List;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.Future;
 
-//TIP To <b>Run</b> code, press <shortcut actionId="Run"/> or
-// click the <icon src="AllIcons.Actions.Execute"/> icon in the gutter.
 public class Main {
-    public static void main(String[] args) {
-        //TIP Press <shortcut actionId="ShowIntentionActions"/> with your caret at the highlighted text
-        // to see how IntelliJ IDEA suggests fixing it.
-        System.out.printf("Hello and welcome!");
+    public static void main(String[] args) throws Exception {
 
-        for (int i = 1; i <= 5; i++) {
-            //TIP Press <shortcut actionId="Debug"/> to start debugging your code. We have set one <icon src="AllIcons.Debugger.Db_set_breakpoint"/> breakpoint
-            // for you, but you can always add more by pressing <shortcut actionId="ToggleLineBreakpoint"/>.
-            System.out.println("i = " + i);
-        }
+        List<Integer> listToSort = List.of(96,67,5,4,8,10,22);
+
+        ExecutorService executorService = Executors.newCachedThreadPool();
+
+        MergeSort ms = new MergeSort(listToSort, executorService);
+
+        Future<List<Integer>> result = executorService.submit(ms);
+        System.out.println(result.get());
+
+        executorService.shutdown();
+
     }
 }
